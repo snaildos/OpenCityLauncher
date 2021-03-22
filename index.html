@@ -56,7 +56,7 @@
   <h1>Welcome To Open City!</h1>
   <p id="version"></p>
   <h3>Press the 'play' button below to launch the game.</h3>
-  <button class="w3-button w3-blue" onclick="Launch();window.close()">Play</button>
+  <button class="w3-button w3-blue" onclick="Launch()">Play</button>
   <div class="invis">
   <h3>Output console</h3>
   <hr>
@@ -69,7 +69,6 @@
       function getCommandOutput() { return document.getElementById("command-output");  };
       function getStatus()      { return document.getElementById("status");  };
 
-      backgroundProcess();
   </script>
   <div id="notification" class="hidden">
     <p id="message"></p>

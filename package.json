@@ -1,6 +1,6 @@
 {
   "name": "OpenCityLauncher",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The official launcher for OpenCity.",
   "main": "main.js",
   "repository": {
