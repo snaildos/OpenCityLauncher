@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<head>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <title>OpenCityLauncher</title>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 20px;
+      font-family: sans-serif;
+      background-color: black;
+      text-align: center;
+    }
+
+    .content {
+  position: fixed;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+}
+
+    #notification {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 200px;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: white;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+    .hidden {
+      display: none;
+    }
+    .invis  {
+      display: none;
+    }
+
+    #myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+}
+
+  </style>
+</head>
+<body>
+<video width="500px" id="myVideo" class="myVideo" height="350px" autobuffer="autobuffer" autoplay="autoplay" loop="loop">
+    <source src='city.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+</video>
+<div class="content">
+  <h1>Welcome To Open City!</h1>
+  <p id="version"></p>
+  <h3>Press the 'play' button below to launch the game.</h3>
+  <button class="w3-button w3-blue" onclick="Launch();window.close()">Play</button>
+  <div class="invis">
+  <h3>Output console</h3>
+  <hr>
+  <textarea rows="20" cols="90" id="command-output" disabled="true"></textarea>
+  <div id="status"></div>
+  <hr>
+</div>
+  <script src="./render.js"></script>
+  <script>
+      function getCommandOutput() { return document.getElementById("command-output");  };
+      function getStatus()      { return document.getElementById("status");  };
+
+      backgroundProcess();
+  </script>
+  <div id="notification" class="hidden">
+    <p id="message"></p>
+    <button id="close-button" onClick="closeNotification()">
+      Close
+    </button>
+    <button id="restart-button" onClick="restartApp()" class="hidden">
+      Restart
+    </button>
+  </div>
+  <script>
+    const { ipcRenderer } = require('electron');
+    const version = document.getElementById('version');
+    const notification = document.getElementById('notification');
+    const message = document.getElementById('message');
+    const restartButton = document.getElementById('restart-button');
+    
+    ipcRenderer.send('app_version');
+    ipcRenderer.on('app_version', (event, arg) => {
+      ipcRenderer.removeAllListeners('app_version');
+      version.innerText = 'Version ' + arg.version;
+    });
+
+    ipcRenderer.on('update_available', () => {
+      ipcRenderer.removeAllListeners('update_available');
+      message.innerText = 'A new update is available. Downloading now...';
+      notification.classList.remove('hidden');
+    });
+
+    ipcRenderer.on('update_downloaded', () => {
+      ipcRenderer.removeAllListeners('update_downloaded');
+      message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
+      restartButton.classList.remove('hidden');
+      notification.classList.remove('hidden');
+    });
+
+    function closeNotification() {
+      notification.classList.add('hidden');
+    }
+    
+    function restartApp() {
+      ipcRenderer.send('restart_app');
+    }
+  </script>
+  </div>
+</body>

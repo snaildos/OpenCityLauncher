@@ -1,2 +1,2 @@
-# OpenCityLauncher
- The launcher for OpenCity.
+# OpenCity Launcher
+The launcher for the game, "OpenCity".

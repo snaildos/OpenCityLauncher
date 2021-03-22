@@ -1,0 +1,27 @@
+{
+  "name": "OpenCityLauncher",
+  "version": "1.0.0",
+  "description": "The official launcher for OpenCity.",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snaildos/OpenCityLauncher"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "build": "electron-builder build --mac --win --publish never",
+    "deploy": "electron-builder build --mac --win --publish always"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^5.0.1",
+    "electron-builder": "^20.40.2"
+  },
+  "dependencies": {
+    "electron-updater": "^4.0.6",
+    "isdev": "^1.0.1",
+    "electron-is": "^3.0.0"
+  }
+}
